@@ -1,4 +1,46 @@
 * {
   margin: 0;
   padding: 0;
+  background-color: "#fcfbfd";
+  font-family: "Rubik", sans-serif;
+  font-size: "16px";
+}
+
+.pt__tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.pt__tooltip__hover {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: auto;
+  right: -18px;
+  background: #fff;
+  color: #49687e;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 18px rgba(73, 104, 126, 0.2);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 5px 10px;
+  min-width: 224px;
+  white-space: normal;
+  width: calc(100% + 22px);
+  word-break: break-word;
+  z-index: 10;
+}
+.pt__tooltip__hover::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: auto;
+  right: 20px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+}
+.pt__tooltip:hover .pt__tooltip__hover {
+  display: block;
 }

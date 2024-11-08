@@ -1,32 +1,22 @@
-import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { setMonthly, setYearly } from "./feature/price/priceModeSlice";
 import { css } from "@emotion/css";
+import SelectModeComponent from "./Components/SelectModeComponent";
+import PriceCards from "./Components/PriceCards";
 
-const style = css({
-  color: "purple",
+const containerStyle = css({
+  maxWidth: "fit-content",
+  marginLeft: "auto",
+  marginRight: "auto",
+  padding: "16px",
 });
 
 function App() {
-  const priceMode = useSelector((state) => state.priceMode.isMonthly);
-  const dispatch = useDispatch();
   return (
     <>
-      <div className={style}>{priceMode ? "Mothly" : "Yearly"}</div>
-      <button
-        onClick={() => {
-          dispatch(setMonthly());
-        }}
-      >
-        Monthly
-      </button>
-      <button
-        onClick={() => {
-          dispatch(setYearly());
-        }}
-      >
-        Yearly
-      </button>
+      <div className={containerStyle}>
+        <SelectModeComponent />
+        <PriceCards />
+      </div>
     </>
   );
 }
