@@ -1,5 +1,6 @@
 import { css } from "@emotion/css";
 import PriceCard from "./PriceCard";
+import { useSelector } from "react-redux";
 
 const gridStyle = css({
   display: "grid",
@@ -9,25 +10,42 @@ const gridStyle = css({
   margin: "0 auto",
 });
 
-// const popularBadgeStyle = css({
-//   position: "absolute",
-//   top: "-0.75rem",
-//   right: "1rem",
-//   backgroundColor: "#10b981",
-//   color: "white",
-//   padding: "0.25rem 0.75rem",
-//   borderRadius: "1rem",
-//   fontSize: "0.75rem",
-// });
+const cardColor = [
+  {
+    primaryColor: "#4cb3fd",
+    secondaryColor: "#e5f2ff",
+  },
+  {
+    primaryColor: "#ffb72c",
+    secondaryColor: "#fff0d9",
+  },
+  {
+    primaryColor: "#68cb9b",
+    secondaryColor: "#d8fdf0",
+  },
+  {
+    primaryColor: "#b78deb",
+    secondaryColor: "#f7f5fb",
+  },
+];
 
 const PriceCards = () => {
+  const { simplifiedPlans } = useSelector((state) => state.plans);
+
   return (
     <div className={gridStyle}>
-      {/* Free Plan */}
-      <PriceCard primaryColor="#4cb3fd" secondaryColor="#e5f2ff" />
-      <PriceCard primaryColor="#4cb3fd" secondaryColor="#e5f2ff" />
-      <PriceCard primaryColor="#4cb3fd" secondaryColor="#e5f2ff" />
-      <PriceCard primaryColor="#4cb3fd" secondaryColor="#e5f2ff" />
+      {simplifiedPlans?.map((planData, index) => {
+        const colorIndex = index % cardColor.length;
+        return (
+          <PriceCard
+            primaryColor={cardColor[colorIndex].primaryColor}
+            secondaryColor={cardColor[colorIndex].secondaryColor}
+            data={planData}
+            isMultiple={planData.isMultiple}
+            key={index}
+          />
+        );
+      })}
     </div>
   );
 };

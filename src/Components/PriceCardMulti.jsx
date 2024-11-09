@@ -2,15 +2,14 @@ import { css } from "@emotion/css";
 import PropTypes from "prop-types";
 import Tooltip from "./smallComponents/Tooltip";
 import CustomSelect from "./smallComponents/CustomSelect";
-import InfoIcon from "./smallComponents/InfoIcon";
 import { useState } from "react";
+import InfoIcon from "./smallComponents/InfoIcon";
 import { useSelector } from "react-redux";
 
-const PriceCard = ({
+const PriceCardMulti = ({
   primaryColor = "#4cb3fd",
   secondaryColor = "#e5f2ff",
   data,
-  isMultiple = false,
 }) => {
   const [priceIndex, setPriceIndex] = useState(0);
   const { features } = useSelector((state) => state.plans);
@@ -19,7 +18,6 @@ const PriceCard = ({
   const onSelect = (option) => {
     setPriceIndex(option.value);
   };
-
   const headerStyle = css({
     padding: "2rem",
     borderRadius: "0.5rem",
@@ -57,19 +55,6 @@ const PriceCard = ({
     gap: "25px",
     color: primaryColor,
   });
-
-  const visitorStyle = css({
-    width: "fit-content",
-    padding: "5px 15px",
-    borderRadius: "40px",
-    fontSize: "12px",
-    display: "inline-flex",
-    alignItems: "center",
-    gap: "4px",
-    background: secondaryColor,
-    color: primaryColor,
-  });
-
   return (
     <div className={headerStyle}>
       <div>
@@ -92,9 +77,7 @@ const PriceCard = ({
               color: primaryColor,
             })}
           >
-            {isMultiple
-              ? data.details[priceIndex][mode].price
-              : data?.details[mode]?.price}
+            {data.details[priceIndex][mode].price}
           </span>
           <div
             className={css({
@@ -113,45 +96,34 @@ const PriceCard = ({
                 color: "red",
                 textDecoration: "line-through",
                 fontSize: "12px",
-                display: mode === "1_year" && "none",
               })}
             >
-              {isMultiple ? data.price[priceIndex] : data.price}/month
+              {data.price[priceIndex]}/month
             </span>
           </div>
         </div>
         <br />
-        {isMultiple && (
-          <div className={css(selectSectionStyle)}>
-            <div
-              className={css({
-                minWidth: "150px",
-                maxWidth: "200px",
-                width: "full",
+        <div className={css(selectSectionStyle)}>
+          <div
+            className={css({
+              minWidth: "150px",
+              maxWidth: "200px",
+              width: "full",
+            })}
+          >
+            <CustomSelect
+              options={data.title.map((value, index) => {
+                return { label: value, value: index };
               })}
-            >
-              <CustomSelect
-                options={data.title.map((value, index) => {
-                  return { label: value, value: index };
-                })}
-                onChange={onSelect}
-                primaryColor={primaryColor}
-                secondaryColor={secondaryColor}
-              />
-            </div>
-            <span className={css({ marginTop: "4px" })}>
-              <InfoIcon text={data.text[priceIndex]} />
-            </span>
+              onChange={onSelect}
+              primaryColor={primaryColor}
+              secondaryColor={secondaryColor}
+            />
           </div>
-        )}
-        {!isMultiple && (
-          <div className={css(visitorStyle)}>
-            <p dangerouslySetInnerHTML={{ __html: data.title }}></p>
-            <span className={css({ marginTop: "4px" })}>
-              <InfoIcon text={data.text} />
-            </span>
-          </div>
-        )}
+          <span className={css({ marginTop: "4px" })}>
+            <InfoIcon text={data.text[priceIndex]} />
+          </span>
+        </div>
       </div>
 
       <div>
@@ -162,9 +134,7 @@ const PriceCard = ({
             padding: "8px 0px",
           })}
         >
-          {data.name.toLowerCase() === "free"
-            ? "Free includes:"
-            : "Everything in free plus:"}
+          {data.name} includes:
         </p>
         <ul className={featureListStyle}>
           {features
@@ -185,15 +155,13 @@ const PriceCard = ({
       </div>
 
       <button className={css(buttonStyle)}>
-        {isMultiple
-          ? data.details[priceIndex][mode].btn_text
-          : data?.details[mode]?.btn_text}
+        {data.details[priceIndex][mode].btn_text}
       </button>
     </div>
   );
 };
 
-PriceCard.propTypes = {
+PriceCardMulti.propTypes = {
   primaryColor: PropTypes.string,
   secondaryColor: PropTypes.string,
   data: PropTypes.shape({
@@ -203,7 +171,7 @@ PriceCard.propTypes = {
     text: PropTypes.string.isRequired,
     details: PropTypes.object.isRequired,
   }).isRequired,
-  isMultiple: PropTypes.bool, // Prop to switch between single and multi price card
+  showSelect: PropTypes.bool,
 };
 
-export default PriceCard;
+export default PriceCardMulti;

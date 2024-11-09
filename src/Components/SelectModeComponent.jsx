@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 import { useDispatch, useSelector } from "react-redux";
-import { setMonthly, setYearly } from "../feature/price/priceModeSlice";
+import { setMode } from "../feature/price/priceModeSlice";
 
 const headerStyle = css({
   display: "flex",
@@ -29,8 +29,17 @@ const activeStyle = css({
 });
 
 const SelectModeComponent = () => {
-  const isMonthly = useSelector((state) => state.priceMode.isMonthly);
   const dispatch = useDispatch();
+  const priceMode = useSelector((state) => state.priceMode.mode);
+  const { plansInfo } = useSelector((state) => state.plans);
+
+  // Get the first key dynamically
+  const defaultMode = Object.keys(plansInfo)[0] || "1_year"; // Default to "1_year" if plansInfo is empty
+
+  // If the mode is not set, initialize it to the first key of plansInfo
+  if (!priceMode) {
+    dispatch(setMode(defaultMode));
+  }
 
   return (
     <div>
@@ -38,33 +47,39 @@ const SelectModeComponent = () => {
         <button
           className={tabStyle}
           onClick={() => {
-            dispatch(setMonthly());
+            dispatch(setMode("1_year"));
           }}
         >
-          <span className={`${isMonthly && activeStyle}`}>Billed monthly</span>
+          <span className={`${priceMode === "1_year" && activeStyle}`}>
+            {plansInfo["1_year"]?.title || "Billed monthly"}
+          </span>
         </button>
         <button
           className={tabStyle}
           onClick={() => {
-            dispatch(setYearly());
+            dispatch(setMode("2_year"));
           }}
         >
-          <span className={`${!isMonthly && activeStyle}`}>Billed yearly</span>
+          <span className={`${priceMode === "2_year" && activeStyle}`}>
+            {plansInfo["2_year"]?.title || "Billed yearly"}
+          </span>
         </button>
-        <span
-          className={css({
-            background: "#f0e6fb",
-            padding: "3px 6px",
-            marginLeft: "10px",
-            borderRadius: "40px",
-            fontSize: "12px",
-            display: "inline-flex",
-            alignItems: "center",
-            color: "#666",
-          })}
-        >
-          Save 20% 🤩
-        </span>
+        {plansInfo["2_year"]?.discount && (
+          <span
+            className={css({
+              background: "#f0e6fb",
+              padding: "3px 6px",
+              marginLeft: "10px",
+              borderRadius: "40px",
+              fontSize: "12px",
+              display: "inline-flex",
+              alignItems: "center",
+              color: "#666",
+            })}
+          >
+            {plansInfo["2_year"].discount}
+          </span>
+        )}
       </div>
     </div>
   );

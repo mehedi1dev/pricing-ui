@@ -25,9 +25,8 @@
   font-size: 14px;
   line-height: 1.5;
   padding: 5px 10px;
-  min-width: 224px;
+  width: 224px;
   white-space: normal;
-  width: calc(100% + 22px);
   word-break: break-word;
   z-index: 10;
 }

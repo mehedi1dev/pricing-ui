@@ -3,18 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 export const priceModeSlice = createSlice({
   name: "priceMode",
   initialState: {
-    isMonthly: 1,
+    mode: "",
   },
   reducers: {
-    setMonthly: (state) => {
-      state.isMonthly = 1;
-    },
-    setYearly: (state) => {
-      state.isMonthly = 0;
+    setMode: (state, action) => {
+      state.mode = action.payload;
     },
   },
 });
 
-export const { setMonthly, setYearly } = priceModeSlice.actions;
+export const { setMode } = priceModeSlice.actions;
 
 export default priceModeSlice.reducer;
