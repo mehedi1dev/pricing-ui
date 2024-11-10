@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 
 const Button = ({ variant, children, onClick }) => {
+  // An object that store the colors based on name,
+  // so we can use it by simply calling,
+  // and not to call conditional statement
   const buttonStyles = {
     primary: { backgroundColor: "blue", color: "white" },
     secondary: { backgroundColor: "gray", color: "black" },
@@ -19,6 +22,7 @@ const Button = ({ variant, children, onClick }) => {
 
 Button.propTypes = {
   variant: PropTypes.string.isRequired,
+  //If the variant is fixed, we can use this.
   //   variant: PropTypes.oneOf([
   //     "primary",
   //     "secondary",

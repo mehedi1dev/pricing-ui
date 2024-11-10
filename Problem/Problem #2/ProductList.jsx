@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+//Using React.memo to cache the result
 const ProductList = React.memo(({ products }) => {
   console.log("ProductList rendered");
   return (

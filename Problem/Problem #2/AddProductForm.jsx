@@ -5,6 +5,7 @@ const AddProductForm = ({ addProduct }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
+  //Using useCallBack to cache the result
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();

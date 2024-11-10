@@ -2,6 +2,10 @@ import { useState, useCallback } from "react";
 import ProductList from "./ProductList";
 import AddProductForm from "./AddProductForm";
 
+//To optize the this codebase, React.Memo and useCallack is needed.
+// React.memo to skip re-rendering a component if the props are unchanged.
+// useCallback to skip re-rendering on next renders.
+
 const App = () => {
   const [products, setProducts] = useState([
     { id: 1, name: "Apple", price: 1 },
