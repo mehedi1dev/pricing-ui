@@ -28,6 +28,7 @@ const PriceCard = ({
     display: "flex",
     flexDirection: "column",
     gap: "1.5rem",
+    position: "relative",
   });
 
   const buttonStyle = css({
@@ -73,6 +74,24 @@ const PriceCard = ({
   return (
     <div className={headerStyle}>
       <div>
+        {data.isPopular && (
+          <div
+            className={css({
+              position: "absolute",
+              top: "6px",
+              right: "6px",
+              color: "#fff",
+              fontSize: "12px",
+              fontWeight: 500,
+              background: primaryColor,
+              width: "fit-content",
+              borderRadius: "3px",
+              padding: "6.5px 8px",
+            })}
+          >
+            Most Popular
+          </div>
+        )}
         <p className={css({ margin: 0, fontSize: "18px", color: "#49687E" })}>
           {data.name}
         </p>
@@ -198,6 +217,7 @@ PriceCard.propTypes = {
   secondaryColor: PropTypes.string,
   data: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    isPopular: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
